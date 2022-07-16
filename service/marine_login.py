@@ -33,11 +33,11 @@ class MarineLoginService(MarineYamlConfig):
         pyautogui.press("enter")
         pyautogui.press("enter")
         time.sleep(2)
-        with pyautogui.hold('ctrl'):
-            pyautogui.press('tab')
+        with pyautogui.hold("ctrl"):
+            pyautogui.press("tab")
         time.sleep(1)
-        with pyautogui.hold('command'):
-            pyautogui.press('w')
+        with pyautogui.hold("command"):
+            pyautogui.press("w")
         time.sleep(1)
 
     def login_button_click(self) -> Dict:

@@ -16,7 +16,7 @@ class MarineQuotingService(MarineYamlConfig):
 
     def quoting_main(self, date: str):
         pyautogui.position()
-        pyautogui.click(x=65, y=272, clicks=2,interval=1)
+        pyautogui.click(x=65, y=272, clicks=2, interval=1)
         pyautogui.press("tab", presses=2, interval=1)
         self._fill_form(self.config["portOfLoading"])
         pyautogui.press("tab")
@@ -26,7 +26,7 @@ class MarineQuotingService(MarineYamlConfig):
         pyautogui.hotkey("command", "v")
         pyautogui.press("enter", interval=1)
         pyautogui.press("tab", interval=1)
-        pyautogui.press("down", interval=1,presses=4)
+        pyautogui.press("down", interval=1, presses=4)
         pyautogui.press("enter", interval=1)
         pyautogui.press("tab", presses=2, interval=1)
         pyautogui.write(self.config["weight"], interval=0.1)

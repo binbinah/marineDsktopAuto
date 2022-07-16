@@ -11,7 +11,7 @@ def main():
     time.sleep(1)
     # goto quoting
     quoting_service = MarineQuotingService()
-    quoting_service.quoting_main(quoting_service.config['departureFrom'])
+    quoting_service.quoting_main(quoting_service.config["departureFrom"])
 
 
 if __name__ == "__main__":
