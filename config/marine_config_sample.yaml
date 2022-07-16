@@ -1,0 +1,14 @@
+username: ''
+passwd: ''
+
+cnc_line_url: ''
+quoting_url: ''
+
+portOfLoading: ""
+portOfDischarge: ""
+placeOfDelivery: ""
+departureFrom: ""
+ddlEquipmentType: ""
+weight: ''
+NoOfContainer: ''
+ddlCommodity: ""

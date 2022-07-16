@@ -11,5 +11,6 @@ pip install pyautugui
 pip install rich
 pip install pyinstaller
 pip install black
+pip install opencv-python
 pip install pyyaml
 ```
