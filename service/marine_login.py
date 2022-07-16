@@ -29,10 +29,16 @@ class MarineLoginService(MarineYamlConfig):
         with pyautogui.hold("command"):
             pyautogui.press("t")
         time.sleep(2)
-        pyautogui.write(self.config["quoting_url"], interval=0.1)
+        pyautogui.write(self.config["quoting_url"])
         pyautogui.press("enter")
         pyautogui.press("enter")
         time.sleep(2)
+        with pyautogui.hold('ctrl'):
+            pyautogui.press('tab')
+        time.sleep(1)
+        with pyautogui.hold('command'):
+            pyautogui.press('w')
+        time.sleep(1)
 
     def login_button_click(self) -> Dict:
         """
@@ -42,18 +48,14 @@ class MarineLoginService(MarineYamlConfig):
         return self._locate_and_click(f"{self.path}/staticfile/login_button.png")
 
     def login_fill(self):
-        print("开始填充登录信息")
         form_location = pyautogui.locateOnScreen(
             f"{self.path}/staticfile/login_form_username.png", confidence=0.9
         )
-        print("获取登录框坐标")
         username_point = pyautogui.center(form_location)
         pyautogui.click(username_point)
-        print("输入用户名")
-        pyautogui.write(self.config["username"], interval=0.1)
+        pyautogui.write(self.config["username"])
         pyautogui.press("tab")
-        print("输入密码")
-        pyautogui.write(self.config["passwd"], interval=0.1)
+        pyautogui.write(self.config["passwd"])
 
         pyautogui.press("enter")
 
