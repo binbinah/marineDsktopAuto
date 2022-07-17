@@ -1,17 +1,10 @@
 import time
 from service.marine_login import MarineLoginService
 from service.marine_quoting import MarineQuotingService
-from enum import Enum
-import requests
 from rich.console import Console
 from rich.table import Table
 from rich.progress import track
-
-
-class Action(Enum):
-
-    LOGIN = "login"
-    QUOTING = "quoting"
+from config.auto_config import Action
 
 
 def rich_format():
@@ -43,18 +36,17 @@ def main():
     console = Console()
     try:
         rich_format()
+        for _ in track(range(10), description="请在进度条完成之前，将 Chrome 置于前台，并且打开首页..."):
+            time.sleep(1)
         while True:
-            for _ in track(range(10), description="正在等待下一次执行..."):
-                time.sleep(1)
             try:
-                action_resp = requests.get("11")
-            except Exception as e:
-                console.print(f"请求接口出现异常错误：{e}, 请重试，或者将报错信息发送给联系维护人确认原因")
-                continue
-            do_action(action_resp["label"])
+                action_label = do_action(Action.STATUS.value)
+            except Exception:
+                pass
+            do_action(action_label)
     except KeyboardInterrupt:
         console.print(f"程序因人为 ctrl - c 操作退出，bye")
 
 
 if __name__ == "__main__":
-    do_action(action='quoting')
+    main()
