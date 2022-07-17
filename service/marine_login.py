@@ -54,7 +54,8 @@ class MarineLoginService(MarineYamlConfig):
         username_point = pyautogui.center(form_location)
         pyautogui.click(username_point)
         pyautogui.write(self.config["username"])
-        pyautogui.press("tab")
+        time.sleep(1)
+        pyautogui.press("tab", interval=0.5)
         pyautogui.write(self.config["passwd"])
 
         pyautogui.press("enter")

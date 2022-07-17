@@ -38,7 +38,7 @@ class MarineQuotingService(MarineYamlConfig):
 
     def _fill_form(self, content):
         pyautogui.write(content)
-        time.sleep(1)
+        pyautogui.press("enter", interval=1)
         pyautogui.press("down", interval=1)
         pyautogui.press("enter", interval=1)
 
