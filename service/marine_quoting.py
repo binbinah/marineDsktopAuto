@@ -35,6 +35,8 @@ class MarineQuotingService(MarineYamlConfig):
         pyautogui.press("enter", interval=1)
         pyautogui.press("tab", presses=1, interval=1)
         pyautogui.press("enter", interval=1)
+        time.sleep(5)
+        pyautogui.hotkey("command", "r")
 
     def _fill_form(self, content):
         pyautogui.write(content)
@@ -42,14 +44,6 @@ class MarineQuotingService(MarineYamlConfig):
         pyautogui.press("down", interval=1)
         pyautogui.press("enter", interval=1)
 
-    def monitor(self):
-        """ """
-        try:
-            while True:
-                x, y = pyautogui.position()
-                print(x, y)
-        except KeyboardInterrupt:
-            pass
 
     @staticmethod
     def _locate_and_click(path: str, clicks: int = 2):

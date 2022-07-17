@@ -57,4 +57,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    do_action(action='quoting')
