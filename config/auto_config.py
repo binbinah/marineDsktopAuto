@@ -28,7 +28,7 @@ class MarineYamlConfig(object):
 
     def yml_config(self):
         """读取 config.yml 的配置。"""
-        with open("/".join([self.path, "marine_config.yaml"]), "r") as f:
+        with open("/".join([self.path, "marine_config.yaml"]), "r", encoding='utf-8') as f:
             try:
                 config = yaml.safe_load(f)
                 return config
