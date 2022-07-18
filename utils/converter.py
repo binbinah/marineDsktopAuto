@@ -1,4 +1,5 @@
 import pyautogui
+import time
 
 
 def monitor():
@@ -6,20 +7,20 @@ def monitor():
     this_y = 0
     try:
         while True:
+            time.sleep(1)
             x, y = pyautogui.position()
             if this_x == x and this_y == y:
                 continue
             this_y = y
             this_x = x
-            print(this_x,this_y)
+            print(this_x, this_y)
     except KeyboardInterrupt:
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     monitor()
     print(pyautogui.size())
     # 1680,1050 分辨率 (0.1345)
     # 浏览器地址栏坐标：226,85
     #
-

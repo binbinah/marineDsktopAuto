@@ -14,6 +14,17 @@ class MarineQuotingService(MarineYamlConfig):
         super(MarineQuotingService, self).__init__()
 
     def quoting_main(self, date: str):
+
+        with pyautogui.hold("command"):
+            pyautogui.press("t")
+        time.sleep(2)
+        pyautogui.write(self.config["quoting_url"])
+        pyautogui.press("enter")
+        pyautogui.press("enter")
+        time.sleep(2)
+        pyautogui.hotkey('alt','shift','o')
+        time.sleep(1)
+
         pyautogui.position()
         pyautogui.click(x=65, y=272, clicks=2, interval=1)
         pyautogui.press("tab", presses=2, interval=1)
@@ -42,7 +53,6 @@ class MarineQuotingService(MarineYamlConfig):
         pyautogui.press("enter", interval=1)
         pyautogui.press("down", interval=1)
         pyautogui.press("enter", interval=1)
-
 
     @staticmethod
     def _locate_and_click(path: str, clicks: int = 2):

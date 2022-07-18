@@ -8,6 +8,7 @@ class Action(Enum):
     STATUS = "status"
     LOGIN = "login"
     QUOTING = "quoting"
+    BEST_PRICE = "best_price"
 
 
 class MarineYamlConfig(object):
@@ -15,7 +16,9 @@ class MarineYamlConfig(object):
         self.path = os.path.abspath(os.path.dirname(__file__))
         self.config = self.yml_config()
         self.action_pair = {
-            Action.STATUS.value: ''
+            self.config["quoting_url"]: Action.QUOTING.value,
+            self.config["cnc_in"]: Action.QUOTING.value,
+            self.config['best_price']: Action.BEST_PRICE.value
         }
 
     def yml_config(self):

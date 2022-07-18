@@ -25,7 +25,7 @@ class MarineStatusService(MarineYamlConfig):
         return address
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     time.sleep(3)
     marine_status_service = MarineStatusService()
     marine_status_service.read_chrome_address()

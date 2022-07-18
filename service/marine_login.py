@@ -1,7 +1,7 @@
 import pyautogui
 from utils.response_wrapper import func_resp_wrapper
 from config.auto_config import MarineYamlConfig
-from rich import print
+from service.marine_status import MarineStatusService
 from typing import Dict
 import time
 
@@ -16,29 +16,32 @@ class MarineLoginService(MarineYamlConfig):
 
     def login_main(self):
 
-        self.login_button_click()
+        # self.login_button_click()
+        pyautogui.click(226, 85, interval=0.5)
+        pyautogui.hotkey("command", "t")
+        time.sleep(1)
+        pyautogui.click(226, 85)
+        pyautogui.write(self.config["cnc_signin_url"])
+        pyautogui.press("enter", presses=2, interval=1)
         time.sleep(5)
         try:
             self.login_fill()
         except TypeError as e:
-            with pyautogui.hold("command"):
-                pyautogui.press("r")
-                self.login_fill()
+            marine_status_service = MarineStatusService()
+            address = marine_status_service.read_chrome_address()
+            if self.config['cnc_line_url'] == address:
+                with pyautogui.hold("command"):
+                    pyautogui.press("t")
+                time.sleep(2)
+                pyautogui.write(self.config["quoting_url"])
+                pyautogui.press("enter")
+                pyautogui.press("enter")
+                time.sleep(2)
+                pyautogui.hotkey('alt','shift','o')
+
         time.sleep(5)
 
-        with pyautogui.hold("command"):
-            pyautogui.press("t")
-        time.sleep(2)
-        pyautogui.write(self.config["quoting_url"])
-        pyautogui.press("enter")
-        pyautogui.press("enter")
-        time.sleep(2)
-        with pyautogui.hold("ctrl"):
-            pyautogui.press("tab")
-        time.sleep(1)
-        with pyautogui.hold("command"):
-            pyautogui.press("w")
-        time.sleep(1)
+
 
     def login_button_click(self) -> Dict:
         """
