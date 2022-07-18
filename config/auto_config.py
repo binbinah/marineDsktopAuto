@@ -1,4 +1,5 @@
 import os
+import platform
 import yaml
 from enum import Enum
 
@@ -17,9 +18,11 @@ class MarineYamlConfig(object):
         self.config = self.yml_config()
         self.action_pair = {
             self.config["quoting_url"]: Action.QUOTING.value,
+            self.config["cnc_line_url"]: Action.QUOTING.value,
             self.config["cnc_in"]: Action.QUOTING.value,
             self.config["best_price"]: Action.BEST_PRICE.value,
         }
+        self.cmd = "command" if platform.system() == "Darwin" else "ctrl"
 
     def yml_config(self):
         """读取 config.yml 的配置。"""
@@ -34,3 +37,4 @@ class MarineYamlConfig(object):
 
 if __name__ == "__main__":
     config = MarineYamlConfig()
+    print(platform.system())

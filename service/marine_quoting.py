@@ -18,7 +18,7 @@ class MarineQuotingService(MarineYamlConfig):
         self,
     ):
 
-        with pyautogui.hold("command"):
+        with pyautogui.hold(self.cmd):
             pyautogui.press("t")
         time.sleep(2)
         pyautogui.write(self.config["quoting_url"])
@@ -36,7 +36,7 @@ class MarineQuotingService(MarineYamlConfig):
         self._fill_form(self.config["portOfDischarge"])
         pyautogui.press("tab", presses=2, interval=0.1)
         pyperclip.copy(self.the_date)
-        pyautogui.hotkey("command", "v")
+        pyautogui.hotkey(self.cmd, "v")
         pyautogui.press("enter", interval=1)
         pyautogui.press("tab", interval=1)
         pyautogui.press("down", interval=1)
@@ -50,7 +50,7 @@ class MarineQuotingService(MarineYamlConfig):
         pyautogui.press("tab", presses=1, interval=1)
         pyautogui.press("enter", interval=1)
         time.sleep(5)
-        pyautogui.hotkey("command", "r")
+        pyautogui.hotkey(self.cmd, "r")
 
     def _fill_form(self, content):
         pyautogui.write(content)

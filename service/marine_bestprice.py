@@ -5,6 +5,7 @@ from service.marine_status import MarineStatusService
 from typing import Dict
 import time
 import pyperclip
+from rich.console import Console
 
 
 class MarineBestPriceService(MarineYamlConfig):
@@ -16,13 +17,15 @@ class MarineBestPriceService(MarineYamlConfig):
         super(MarineBestPriceService, self).__init__()
 
     def read_page_data(self):
-        info = [{}]
         pyautogui.click(x=65, y=272, clicks=2, interval=1)
-        pyautogui.hotkey("command", "a")
+        pyautogui.hotkey(self.cmd, "a")
         time.sleep(1)
-        pyautogui.hotkey("command", "c")
+        pyautogui.hotkey(self.cmd, "c")
         time.sleep(1)
         page_string = pyperclip.paste()
         for i in page_string.split("SPOTON"):
             if "综合利率" in i:
                 print(i.replace("\n", ","))
+            if "目前没有报价可供选择" in i:
+                console = Console()
+                console.print("Bingo！命中一个待放仓的线路，请关注", style="bold red")

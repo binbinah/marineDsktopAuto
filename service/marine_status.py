@@ -13,14 +13,13 @@ class MarineStatusService(MarineYamlConfig):
     def __init__(self):
         super(MarineStatusService, self).__init__()
 
-    @staticmethod
-    def read_chrome_address():
+    def read_chrome_address(self):
         """
         读取浏览器 URL 地址
         """
         pyautogui.click(x=226, y=85, clicks=2)
-        pyautogui.hotkey("command", "a", interval=0.5)
-        pyautogui.hotkey("command", "c", interval=0.5)
+        pyautogui.hotkey(self.cmd, "a", interval=0.5)
+        pyautogui.hotkey(self.cmd, "c", interval=0.5)
         address = pyperclip.paste()
         return address
 

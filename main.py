@@ -25,7 +25,7 @@ def rich_format():
     table.add_row("2、将浏览器最大化展示，将本应用程序的终端最小化")
     table.add_row("3、如需退出自动化程序，请按：ctrl-c")
     table.add_row("4、本程序运行的最优屏幕分辨率为：Size(width=1920, height=1080)")
-    table.add_row("4、需要 Chrome 插件：油猴插件 + Keyboard Shortcuts to Close Other/Right Tabs")
+    table.add_row("4、需要 Chrome 插件: Keyboard Shortcuts to Close Other/Right Tabs")
     console.print(table)
 
 
@@ -53,16 +53,15 @@ def main():
         rich_format()
 
         input_date = input(
-            "请输入你想要监控的日期（格式示例：YYYY-MM-DD），如果直接回车或者输入的日期无效，默认监控未来一周内的舱位情况。\n请输入："
+            "请输入你想要监控的日期（格式示例：YYYY-MM-DD），如果直接回车或者输入的日期无效，默认监控明天的报价情况。\n请输入："
         )
         date_match_result = re.search(r"(\d{4}-\d{1,2}-\d{1,2})", input_date)
         try:
             input_date_reg = date_match_result.group(0)
         except AttributeError:
             input_date_reg = None
-        print(input_date_reg)
         if input_date and input_date_reg:
-            the_date = input_date
+            the_date = datetime.strptime(input_date, "%Y-%m-%d").strftime("%d-%m-%Y")
         else:
             the_date = (datetime.now() + timedelta(1)).strftime("%d-%m-%Y")
 
@@ -82,7 +81,7 @@ def main():
             except Exception:
                 console.print("执行失败，请将浏览器全屏，并且将本程序最小化运行")
     except KeyboardInterrupt:
-        console.print(f"程序因人为 ctrl - c 操作退出，bye")
+        console.print(f"\n程序因人为 ctrl - c 操作退出，bye", style="green")
 
 
 if __name__ == "__main__":

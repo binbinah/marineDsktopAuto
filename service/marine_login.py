@@ -16,7 +16,7 @@ class MarineLoginService(MarineYamlConfig):
 
     def login_main(self):
         pyautogui.click(226, 85, interval=0.5)
-        pyautogui.hotkey("command", "t")
+        pyautogui.hotkey(self.cmd, "t")
         time.sleep(1)
         pyautogui.click(226, 85)
         pyautogui.write(self.config["cnc_signin_url"])
@@ -28,7 +28,7 @@ class MarineLoginService(MarineYamlConfig):
             marine_status_service = MarineStatusService()
             address = marine_status_service.read_chrome_address()
             if self.config["cnc_line_url"] == address:
-                with pyautogui.hold("command"):
+                with pyautogui.hold(self.cmd):
                     pyautogui.press("t")
                 time.sleep(2)
                 pyautogui.write(self.config["quoting_url"])
