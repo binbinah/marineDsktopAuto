@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pyautogui
 from utils.response_wrapper import func_resp_wrapper
 from config.auto_config import MarineYamlConfig
