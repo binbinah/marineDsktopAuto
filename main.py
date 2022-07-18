@@ -2,10 +2,14 @@ import time
 from service.marine_login import MarineLoginService
 from service.marine_quoting import MarineQuotingService
 from service.marine_status import MarineStatusService
+from service.marine_bestprice import MarineBestPriceService
 from rich.console import Console
 from rich.table import Table
 from rich.progress import track
 from config.auto_config import Action
+import re
+from utils.converter import month_convert
+from datetime import datetime, timedelta
 
 
 def rich_format():
@@ -25,24 +29,43 @@ def rich_format():
     console.print(table)
 
 
-def do_action(action: str):
+def do_action(action: str, the_date):
     if action == Action.LOGIN.value:
         login_service = MarineLoginService()
         login_service.login_main()
     # goto quoting
     if action == Action.QUOTING.value:
-        quoting_service = MarineQuotingService()
-        quoting_service.quoting_main(quoting_service.config["departureFrom"])
+        month_pair = month_convert()
+        the_date_list = the_date.split("-")
+        the_date_list[1] = month_pair[the_date_list[1]]
+        quoting_service = MarineQuotingService("-".join(the_date_list))
+        quoting_service.quoting_main()
 
     # goto bestpricee
     if action == Action.BEST_PRICE.value:
-        pass
+        best_price = MarineBestPriceService()
+        best_price.read_page_data()
 
 
 def main():
     console = Console()
     try:
         rich_format()
+
+        input_date = input(
+            "请输入你想要监控的日期（格式示例：YYYY-MM-DD），如果直接回车或者输入的日期无效，默认监控未来一周内的舱位情况。\n请输入："
+        )
+        date_match_result = re.search(r"(\d{4}-\d{1,2}-\d{1,2})", input_date)
+        try:
+            input_date_reg = date_match_result.group(0)
+        except AttributeError:
+            input_date_reg = None
+        print(input_date_reg)
+        if input_date and input_date_reg:
+            the_date = input_date
+        else:
+            the_date = (datetime.now() + timedelta(1)).strftime("%d-%m-%Y")
+
         for _ in track(range(10), description="请在进度条完成之前，将 Chrome 置于前台，并且打开首页..."):
             time.sleep(1)
         while True:
@@ -55,7 +78,7 @@ def main():
             except KeyError:
                 status = Action.LOGIN.value
             try:
-                do_action(status)
+                do_action(status, the_date)
             except Exception:
                 console.print("执行失败，请将浏览器全屏，并且将本程序最小化运行")
     except KeyboardInterrupt:

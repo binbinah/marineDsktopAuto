@@ -10,10 +10,13 @@ class MarineQuotingService(MarineYamlConfig):
     点击事件类
     """
 
-    def __init__(self):
+    def __init__(self, the_date):
         super(MarineQuotingService, self).__init__()
+        self.the_date = the_date
 
-    def quoting_main(self, date: str):
+    def quoting_main(
+        self,
+    ):
 
         with pyautogui.hold("command"):
             pyautogui.press("t")
@@ -22,7 +25,7 @@ class MarineQuotingService(MarineYamlConfig):
         pyautogui.press("enter")
         pyautogui.press("enter")
         time.sleep(2)
-        pyautogui.hotkey('alt','shift','o')
+        pyautogui.hotkey("alt", "shift", "o")
         time.sleep(1)
 
         pyautogui.position()
@@ -32,15 +35,16 @@ class MarineQuotingService(MarineYamlConfig):
         pyautogui.press("tab")
         self._fill_form(self.config["portOfDischarge"])
         pyautogui.press("tab", presses=2, interval=0.1)
-        pyperclip.copy(date)
+        pyperclip.copy(self.the_date)
         pyautogui.hotkey("command", "v")
         pyautogui.press("enter", interval=1)
         pyautogui.press("tab", interval=1)
-        pyautogui.press("down", interval=1, presses=4)
+        pyautogui.press("down", interval=1)
+        pyautogui.press("down", interval=0.1, presses=3)
         pyautogui.press("enter", interval=1)
         pyautogui.press("tab", presses=2, interval=1)
         pyautogui.write(self.config["weight"], interval=0.1)
-        pyautogui.press("tab", presses=4, interval=1)
+        pyautogui.press("tab", presses=4, interval=0.5)
         pyautogui.press("down", presses=2, interval=1)
         pyautogui.press("enter", interval=1)
         pyautogui.press("tab", presses=1, interval=1)
@@ -73,5 +77,4 @@ class MarineQuotingService(MarineYamlConfig):
 
 
 if __name__ == "__main__":
-    quoting = MarineQuotingService()
-    quoting.quoting_main("16-七月-2022")
+    pass

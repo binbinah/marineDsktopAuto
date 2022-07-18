@@ -18,7 +18,7 @@ class MarineYamlConfig(object):
         self.action_pair = {
             self.config["quoting_url"]: Action.QUOTING.value,
             self.config["cnc_in"]: Action.QUOTING.value,
-            self.config['best_price']: Action.BEST_PRICE.value
+            self.config["best_price"]: Action.BEST_PRICE.value,
         }
 
     def yml_config(self):
