@@ -17,10 +17,10 @@ class MarineLoginService(MarineYamlConfig):
         super(MarineLoginService, self).__init__()
 
     def login_main(self):
-        pyautogui.click(226, 85, interval=0.5)
-        pyautogui.hotkey(self.cmd, "t")
-        time.sleep(1)
-        pyautogui.click(226, 85)
+
+        pyautogui.hotkey(
+            self.locate_address_keymap[0], self.locate_address_keymap[1], interval=0.5
+        )
         pyautogui.write(self.config["cnc_signin_url"])
         pyautogui.press("enter", presses=2, interval=1)
         time.sleep(5)
@@ -30,14 +30,15 @@ class MarineLoginService(MarineYamlConfig):
             marine_status_service = MarineStatusService()
             address = marine_status_service.read_chrome_address()
             if self.config["cnc_line_url"] == address:
-                with pyautogui.hold(self.cmd):
-                    pyautogui.press("t")
-                time.sleep(2)
+                pyautogui.hotkey(
+                    self.locate_address_keymap[0],
+                    self.locate_address_keymap[1],
+                    interval=0.5,
+                )
                 pyautogui.write(self.config["quoting_url"])
                 pyautogui.press("enter")
                 pyautogui.press("enter")
                 time.sleep(2)
-                pyautogui.hotkey("alt", "shift", "o")
 
         time.sleep(5)
 
@@ -53,7 +54,9 @@ class MarineLoginService(MarineYamlConfig):
         #     f"{self.path}/staticfile/login_form_username.png", confidence=0.9
         # )
         # username_point = pyautogui.center(form_location)
-        pyautogui.click(x=65, y=272, clicks=2, interval=1)
+        pyautogui.hotkey(
+            self.locate_address_keymap[0], self.locate_address_keymap[1], interval=0.5
+        )
         pyautogui.press("tab", presses=3, interval=1)
         # pyautogui.click(username_point)
         pyautogui.write(self.config["username"])

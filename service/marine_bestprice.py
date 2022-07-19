@@ -19,11 +19,10 @@ class MarineBestPriceService(MarineYamlConfig):
         super(MarineBestPriceService, self).__init__()
 
     def read_page_data(self):
-        pyautogui.click(x=65, y=272, clicks=2, interval=1)
-        pyautogui.hotkey(self.cmd, "a")
-        time.sleep(1)
-        pyautogui.hotkey(self.cmd, "c")
-        time.sleep(1)
+        pyautogui.hotkey(self.locate_address_keymap[0], self.locate_address_keymap[1], interval=0.5)
+        pyautogui.press("tab", interval=0.5)
+        pyautogui.hotkey(self.cmd, "a", interval=0.5)
+        pyautogui.hotkey(self.cmd, "c", interval=0.5)
         page_string = pyperclip.paste()
         for i in page_string.split("SPOTON"):
             if "综合利率" in i:

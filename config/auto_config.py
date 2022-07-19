@@ -27,7 +27,7 @@ class MarineYamlConfig(object):
         }
         self.cmd = "command" if platform.system() == "Darwin" else "ctrl"
         self.locate_address_keymap = (
-            ["alt", "d"] if platform.system() == "Darwin" else ["command", "l"]
+            ["command", "l"] if platform.system() == "Darwin" else ["alt", "d"]
         )
 
     def yml_config(self):

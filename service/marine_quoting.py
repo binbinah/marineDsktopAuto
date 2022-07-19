@@ -18,17 +18,14 @@ class MarineQuotingService(MarineYamlConfig):
 
     def quoting_main(self):
 
-        with pyautogui.hold(self.cmd):
-            pyautogui.press("t")
-        time.sleep(2)
+        pyautogui.hotkey(
+            self.locate_address_keymap[0], self.locate_address_keymap[1], interval=0.5
+        )
         pyautogui.write(self.config["quoting_url"])
         pyautogui.press("enter")
         pyautogui.press("enter")
         time.sleep(2)
-        pyautogui.hotkey("alt", "shift", "o")
-        time.sleep(1)
 
-        pyautogui.position()
         pyautogui.click(x=65, y=272, clicks=2, interval=1)
         pyautogui.press("tab", presses=2, interval=1)
         self._fill_form(self.config["portOfLoading"])
