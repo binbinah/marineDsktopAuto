@@ -16,9 +16,7 @@ class MarineQuotingService(MarineYamlConfig):
         super(MarineQuotingService, self).__init__()
         self.the_date = the_date
 
-    def quoting_main(
-        self,
-    ):
+    def quoting_main(self):
 
         with pyautogui.hold(self.cmd):
             pyautogui.press("t")

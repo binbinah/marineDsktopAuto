@@ -4,6 +4,7 @@ import os
 import platform
 import yaml
 from enum import Enum
+import pyautogui
 
 
 class Action(Enum):
@@ -25,10 +26,15 @@ class MarineYamlConfig(object):
             self.config["best_price"]: Action.BEST_PRICE.value,
         }
         self.cmd = "command" if platform.system() == "Darwin" else "ctrl"
+        self.locate_address_keymap = (
+            ["alt", "d"] if platform.system() == "Darwin" else ["command", "l"]
+        )
 
     def yml_config(self):
         """读取 config.yml 的配置。"""
-        with open("/".join([self.path, "marine_config.yaml"]), "r", encoding='utf-8') as f:
+        with open(
+            "/".join([self.path, "marine_config.yaml"]), "r", encoding="utf-8"
+        ) as f:
             try:
                 config = yaml.safe_load(f)
                 return config

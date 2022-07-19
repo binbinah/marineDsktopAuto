@@ -19,8 +19,7 @@ class MarineStatusService(MarineYamlConfig):
         """
         读取浏览器 URL 地址
         """
-        pyautogui.click(x=226, y=85, clicks=2)
-        pyautogui.hotkey(self.cmd, "a", interval=0.5)
+        pyautogui.hotkey(self.locate_address_keymap[0], self.locate_address_keymap[1])
         pyautogui.hotkey(self.cmd, "c", interval=0.5)
         address = pyperclip.paste()
         return address
