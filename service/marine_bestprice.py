@@ -19,7 +19,9 @@ class MarineBestPriceService(MarineYamlConfig):
         super(MarineBestPriceService, self).__init__()
 
     def read_page_data(self):
-        pyautogui.hotkey(self.locate_address_keymap[0], self.locate_address_keymap[1], interval=0.5)
+        pyautogui.hotkey(
+            self.locate_address_keymap[0], self.locate_address_keymap[1], interval=0.5
+        )
         pyautogui.press("tab", interval=0.5)
         pyautogui.hotkey(self.cmd, "a", interval=0.5)
         pyautogui.hotkey(self.cmd, "c", interval=0.5)

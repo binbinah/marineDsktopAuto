@@ -15,5 +15,7 @@ pip install opencv-python
 pip install pyyaml
 ```
 
+打包命令(windows 需求)： pyinstaller -F -i ship.PNG main.py    
+
 #### 完全体结构：
 ![image](https://user-images.githubusercontent.com/5344741/179388723-51f80972-ba87-497b-a52d-3a8b43c1ef3e.png)

@@ -4,7 +4,7 @@ import os
 import platform
 import yaml
 from enum import Enum
-import pyautogui
+import sys
 
 
 class Action(Enum):
@@ -17,7 +17,11 @@ class Action(Enum):
 
 class MarineYamlConfig(object):
     def __init__(self):
-        self.path = os.path.abspath(os.path.dirname(__file__))
+        self.path = (
+            sys._MEIPASS
+            if getattr(sys, "frozen", False)
+            else os.path.abspath(os.path.dirname(__file__))
+        )
         self.config = self.yml_config()
         self.action_pair = {
             self.config["quoting_url"]: Action.QUOTING.value,
