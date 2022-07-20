@@ -21,7 +21,7 @@ class MarineLoginService(MarineYamlConfig):
         pyautogui.hotkey(
             self.locate_address_keymap[0], self.locate_address_keymap[1], interval=0.5
         )
-        pyautogui.write(self.config["cnc_signin_url"])
+        pyautogui.write(self.config["cnc_signin_url"], interval=0.1)
         pyautogui.press("enter", presses=2, interval=1)
         time.sleep(5)
         try:
@@ -35,7 +35,7 @@ class MarineLoginService(MarineYamlConfig):
                     self.locate_address_keymap[1],
                     interval=0.5,
                 )
-                pyautogui.write(self.config["quoting_url"])
+                pyautogui.write(self.config["quoting_url"], interval=0.1)
                 pyautogui.press("enter")
                 pyautogui.press("enter")
                 time.sleep(2)
@@ -59,10 +59,10 @@ class MarineLoginService(MarineYamlConfig):
         )
         pyautogui.press("tab", presses=3, interval=1)
         # pyautogui.click(username_point)
-        pyautogui.write(self.config["username"])
+        pyautogui.write(self.config["username"], interval=0.1)
         time.sleep(1)
         pyautogui.press("tab", interval=0.5)
-        pyautogui.write(self.config["passwd"])
+        pyautogui.write(self.config["passwd"], interval=0.1)
 
         pyautogui.press("enter")
 

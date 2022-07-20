@@ -24,7 +24,9 @@ def rich_format():
     table.add_row("自动化程序会占用键盘和鼠标以及屏幕。")
     table.add_row("注意事项：")
     table.add_row("1、将电脑全局输入法设置为[red]英文输入法[/red]否则程序会陷入无限失败循环")
-    table.add_row("2、请确保[red]窗口焦点在 Chrome 浏览器上[/red]，Chrome 浏览器至少占屏幕左侧一半以上，将本应用程序的终端最小化")
+    table.add_row(
+        "2、请确保[red]窗口焦点在 Chrome 浏览器上[/red]，Chrome 浏览器至少占屏幕左侧一半以上，将本应用程序的终端最小化"
+    )
     table.add_row("3、如退出自动化程序，请按：ctrl-c")
     console.print(table)
 
@@ -65,7 +67,9 @@ def main():
                 the_date = datetime.today().strftime("%d-%m-%Y")
                 console.print("输入的日期早于今天，自动调整为监控今天的报价")
             else:
-                the_date = datetime.strptime(input_date, "%Y-%m-%d").strftime("%d-%m-%Y")
+                the_date = datetime.strptime(input_date, "%Y-%m-%d").strftime(
+                    "%d-%m-%Y"
+                )
         else:
             the_date = (datetime.now() + timedelta(1)).strftime("%d-%m-%Y")
 

@@ -21,13 +21,17 @@ class MarineQuotingService(MarineYamlConfig):
         pyautogui.hotkey(
             self.locate_address_keymap[0], self.locate_address_keymap[1], interval=0.5
         )
-        pyautogui.write(self.config["quoting_url"])
+        pyautogui.write(self.config["quoting_url"], interval=0.1)
         pyautogui.press("enter")
         pyautogui.press("enter")
-        time.sleep(2)
+        time.sleep(5)
 
-        pyautogui.click(x=65, y=272, clicks=2, interval=1)
-        pyautogui.press("tab", presses=2, interval=1)
+        pyautogui.hotkey(self.cmd, 'f')
+        pyperclip.copy('起运港')
+        pyautogui.hotkey(self.cmd, "v")
+        pyautogui.press('enter', interval=0.1)
+        pyautogui.press('esc', interval=0.1)
+        pyautogui.press("tab", presses=1, interval=1)
         self._fill_form(self.config["portOfLoading"])
         pyautogui.press("tab")
         self._fill_form(self.config["portOfDischarge"])
@@ -50,7 +54,7 @@ class MarineQuotingService(MarineYamlConfig):
         pyautogui.hotkey(self.cmd, "r")
 
     def _fill_form(self, content):
-        pyautogui.write(content)
+        pyautogui.write(content, interval=0.1)
         pyautogui.press("enter", interval=1)
         pyautogui.press("down", interval=1)
         pyautogui.press("enter", interval=1)

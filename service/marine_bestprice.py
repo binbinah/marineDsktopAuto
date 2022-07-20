@@ -28,7 +28,8 @@ class MarineBestPriceService(MarineYamlConfig):
         page_string = pyperclip.paste()
         for i in page_string.split("SPOTON"):
             if "综合利率" in i:
-                print('监控到一条已经可以下单的项目，# Todo')
+                console = Console()
+                console.print("命中一个待放仓的线路，请关注，#详细信息 Todo", style="bold blue")
             if "目前没有报价可供选择" in i:
                 console = Console()
-                console.print("命中一个待放仓的线路，请关注，#Todo", style="bold red")
+                console.print("命中一个待放仓的线路，请关注，#详细信息 Todo", style="bold red")
