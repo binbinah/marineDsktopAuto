@@ -6,8 +6,10 @@ from config.auto_config import MarineYamlConfig
 from service.marine_status import MarineStatusService
 from typing import Dict
 import time
+from rich.table import Column, Table
 import pyperclip
 from rich.console import Console
+from utils.notification import Email
 
 
 class MarineBestPriceService(MarineYamlConfig):
@@ -26,10 +28,31 @@ class MarineBestPriceService(MarineYamlConfig):
         pyautogui.hotkey(self.cmd, "a", interval=0.5)
         pyautogui.hotkey(self.cmd, "c", interval=0.5)
         page_string = pyperclip.paste()
+        # email = Email(gmail_from=self.config["mail_from"], send_to=self.config['mail_to'], )
+        post_data = []
+        console = Console()
         for i in page_string.split("SPOTON"):
             if "综合利率" in i:
-                console = Console()
-                console.print("命中一个待放仓的线路，请关注，#详细信息 Todo", style="bold blue")
+                i = i.replace("最早到达\n最早离港时间\n", "")
+                start = ",".join(i.split("\n")[0:2])
+                info = ",".join(i.split("\n")[2:6])
+                end = ",".join(i.split("\n")[6:9])
+                cost = ",".join(i.split("\n")[9:12])
+                post_data.append([start, info, end, cost])
+
             if "目前没有报价可供选择" in i:
                 console = Console()
                 console.print("命中一个待放仓的线路，请关注，#详细信息 Todo", style="bold red")
+                console.print(i)
+        if post_data:
+            table = Table(show_header=True, header_style="bold magenta")
+            table.add_column("序号", width=5)
+            table.add_column("时间和起始港")
+            table.add_column("详细信息")
+            table.add_column("时间和卸货港")
+            table.add_column("价格")
+            for key, post_item in enumerate(post_data):
+                table.add_row(str(key), post_item[0], post_item[1], post_item[2], post_item[3])
+            console.print(table)
+        else:
+            console.print("今日暂无可选择的舱位", style="bold red")

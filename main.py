@@ -86,8 +86,8 @@ def main():
                 status = Action.LOGIN.value
             try:
                 do_action(status, the_date)
-            except Exception:
-                console.print("执行失败，请将浏览器全屏，并且将本程序最小化运行")
+            except Exception as e:
+                console.print(f"执行失败，请将浏览器全屏，并且将本程序最小化运行:{e}")
     except KeyboardInterrupt:
         console.print(f"\n程序因人为 ctrl - c 操作退出，bye", style="green")
 
