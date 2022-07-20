@@ -13,11 +13,30 @@ pip install pyinstaller
 pip install black
 pip install opencv-python
 pip install pyyaml
+
+pip install pywin32
 ```
-打包的时候，带上配置文件：
 
-```bigquery
+如果在 Windows 下运行，参考的获取窗口句柄代码为：
 
+```
+import sys
+import win32gui
+import win32con
+
+
+def get_all_hwnd(hwnd, mouse):
+    if (win32gui.IsWindow(hwnd)
+            and win32gui.IsWindowEnabled(hwnd)
+            and win32gui.IsWindowVisible(hwnd)):
+        hwnd_title.update({hwnd: win32gui.GetWindowText(hwnd)})
+
+
+hwnd_title = {}
+win32gui.EnumWindows(get_all_hwnd, 0)
+for h, t in hwnd_title.items():
+    if t :
+        print (h, t)   
 ```
 
 
