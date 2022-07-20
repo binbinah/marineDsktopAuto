@@ -23,7 +23,7 @@ class MarineQuotingService(MarineYamlConfig):
         )
         # pyautogui.write(self.config["quoting_url"], interval=0.1)
         pyperclip.copy(self.config["quoting_url"])
-        pyautogui.hotkey(self.cmd, 'v')
+        pyautogui.hotkey(self.cmd, "v")
         pyautogui.press("enter", presses=2)
         time.sleep(5)
 

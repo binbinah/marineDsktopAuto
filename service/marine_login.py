@@ -24,7 +24,7 @@ class MarineLoginService(MarineYamlConfig):
         )
         # pyautogui.write(self.config["cnc_signin_url"], interval=0.1)
         pyperclip.copy(self.config["cnc_signin_url"])
-        pyautogui.hotkey(self.cmd, 'v')
+        pyautogui.hotkey(self.cmd, "v")
         pyautogui.press("enter", presses=2, interval=1)
         time.sleep(5)
         try:
@@ -40,7 +40,7 @@ class MarineLoginService(MarineYamlConfig):
                 )
                 # pyautogui.write(self.config["quoting_url"], interval=0.1)
                 pyperclip.copy(self.config["quoting_url"])
-                pyautogui.hotkey(self.cmd, 'v')
+                pyautogui.hotkey(self.cmd, "v")
                 pyautogui.press("enter", presses=2, interval=0.1)
                 time.sleep(2)
 
@@ -65,12 +65,12 @@ class MarineLoginService(MarineYamlConfig):
         # pyautogui.click(username_point)
         # pyautogui.write(self.config["username"], interval=0.1)
         pyperclip.copy(self.config["username"])
-        pyautogui.hotkey(self.cmd, 'v')
+        pyautogui.hotkey(self.cmd, "v")
         time.sleep(1)
         pyautogui.press("tab", interval=0.5)
         # pyautogui.write(self.config["passwd"], interval=0.1)
         pyperclip.copy(self.config["passwd"])
-        pyautogui.hotkey(self.cmd, 'v')
+        pyautogui.hotkey(self.cmd, "v")
         pyautogui.press("enter")
 
     @staticmethod

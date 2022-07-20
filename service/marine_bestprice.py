@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import pyautogui
-from utils.response_wrapper import func_resp_wrapper
 from config.auto_config import MarineYamlConfig
-from service.marine_status import MarineStatusService
-from typing import Dict
-import time
-from rich.table import Column, Table
+from rich.table import Table
 import pyperclip
 from rich.console import Console
-from utils.notification import Email
+import os
 
 
 class MarineBestPriceService(MarineYamlConfig):
@@ -28,16 +24,15 @@ class MarineBestPriceService(MarineYamlConfig):
         pyautogui.hotkey(self.cmd, "a", interval=0.5)
         pyautogui.hotkey(self.cmd, "c", interval=0.5)
         page_string = pyperclip.paste()
-        # email = Email(gmail_from=self.config["mail_from"], send_to=self.config['mail_to'], )
         post_data = []
         console = Console()
         for i in page_string.split("SPOTON"):
             if "综合利率" in i:
-                i = i.replace("最早到达\n最早离港时间\n", "")
-                start = ",".join(i.split("\n")[0:2])
-                info = ",".join(i.split("\n")[2:6])
-                end = ",".join(i.split("\n")[6:9])
-                cost = ",".join(i.split("\n")[9:12])
+                i = i.replace(f"最早到达{os.linesep}最早离港时间{os.linesep}", "")
+                start = ",".join(i.split(os.linesep)[0:2])
+                info = ",".join(i.split(os.linesep)[2:6])
+                end = ",".join(i.split(os.linesep)[6:9])
+                cost = ",".join(i.split(os.linesep)[9:12])
                 post_data.append([start, info, end, cost])
 
             if "目前没有报价可供选择" in i:
@@ -52,7 +47,9 @@ class MarineBestPriceService(MarineYamlConfig):
             table.add_column("时间和卸货港")
             table.add_column("价格")
             for key, post_item in enumerate(post_data):
-                table.add_row(str(key), post_item[0], post_item[1], post_item[2], post_item[3])
+                table.add_row(
+                    str(key), post_item[0], post_item[1], post_item[2], post_item[3]
+                )
             console.print(table)
         else:
             console.print("今日暂无可选择的舱位", style="bold red")
