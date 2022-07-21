@@ -23,10 +23,7 @@ def rich_format():
     table.add_column("使用说明", width=100)
     table.add_row("自动化程序会占用键盘和鼠标以及屏幕。")
     table.add_row("注意事项：")
-    table.add_row("1、将电脑全局输入法设置为[red]英文输入法[/red]否则程序会陷入无限失败循环")
-    table.add_row(
-        "2、请确保[red]窗口焦点在 Chrome 浏览器上[/red]，Chrome 浏览器至少占屏幕左侧一半以上，将本应用程序的终端最小化"
-    )
+    table.add_row("1、请确保[red]窗口焦点在 Chrome 浏览器上[/red]")
     table.add_row("3、如退出自动化程序，请按：ctrl-c")
     console.print(table)
 
@@ -89,6 +86,12 @@ def main():
             except Exception as e:
                 console.print(f"执行失败，错误信息:{e}")
     except KeyboardInterrupt:
+
+        n = 5
+        while n > 0:
+            console.print(f"\n程序将在 {n} 秒后退出...")
+            time.sleep(1)
+            n = n - 1
         console.print(f"\n程序因人为 ctrl - c 操作退出，bye", style="green")
 
 
