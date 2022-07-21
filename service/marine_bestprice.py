@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import time
 
 import pyautogui
 from config.auto_config import MarineYamlConfig
@@ -17,12 +18,14 @@ class MarineBestPriceService(MarineYamlConfig):
         super(MarineBestPriceService, self).__init__()
 
     def read_page_data(self):
-        pyautogui.hotkey(
-            self.locate_address_keymap[0], self.locate_address_keymap[1], interval=0.5
-        )
+        with pyautogui.hold(self.locate_address_keymap[0]):
+            pyautogui.press(self.locate_address_keymap[1])
         pyautogui.press("tab", interval=0.5)
-        pyautogui.hotkey(self.cmd, "a", interval=0.5)
-        pyautogui.hotkey(self.cmd, "c", interval=0.5)
+        with pyautogui.hold(self.cmd):
+            pyautogui.press("a")
+        time.sleep(0.5)
+        with pyautogui.hold(self.cmd):
+            pyautogui.press("c")
         page_string = pyperclip.paste()
         post_data = []
         console = Console()
