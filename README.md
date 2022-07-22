@@ -41,6 +41,13 @@ for h, t in hwnd_title.items():
         print (h, t)   
 ```
 
+对于如何获取浏览器被选择的文本的坐标，纯 js 有如下实现方式：
+
+1. 打开控制台：输入 window.getSelection().getRangeAt(0).getBoundingClientRect();
+
+![image](https://user-images.githubusercontent.com/5344741/180379395-e29236d6-2d5e-4736-9cbd-2627c739664b.png)
+
+
 
 #### 完全体结构：
 ![image](https://user-images.githubusercontent.com/5344741/179388723-51f80972-ba87-497b-a52d-3a8b43c1ef3e.png)
