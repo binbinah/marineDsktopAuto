@@ -43,7 +43,26 @@ for h, t in hwnd_title.items():
 
 对于如何获取浏览器被选择的文本的坐标，纯 js 有如下实现方式：
 
-1. 打开控制台：输入 window.getSelection().getRangeAt(0).getBoundingClientRect();
+1. 打开控制台：输入 下方脚本，可以将网页中被选择的文本的坐标复制到剪贴板
+
+```
+function copyToClipboard(text) {
+    var dummy = document.createElement("textarea");
+    // to avoid breaking orgain page when copying more words
+    // cant copy when adding below this code
+    // dummy.style.display = 'none'
+    document.body.appendChild(dummy);
+    //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+}
+const selectedText = window.getSelection().getRangeAt(0).getBoundingClientRect();
+copyToClipboard('{x:'+selectedText.x+',y:'+selectedText.y+'}')
+
+
+```
 
 ![image](https://user-images.githubusercontent.com/5344741/180379395-e29236d6-2d5e-4736-9cbd-2627c739664b.png)
 
