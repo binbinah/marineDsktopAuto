@@ -1,12 +1,10 @@
 # marineDesktopAuto
 
-一个特定的桌面自动化项目。
-本项目可以作为 pyautogui 控制键鼠操作浏览器的一个实际操作案例，更多可以参考 pyautogui 文档去实现特定需求下的自动化。
+#### 本客户端只能针对特定的场景进行自动化，不具备通用型。更多可以参考 pyautogui 文档去实现特定需求下的自动化。
 
 依赖根据不同 OS 会有不同的依赖要求，本项目主要在 macOS 下开发，运行主要在 Windows，因此不适合直接导入 requirements.txt
 
 主要安装依赖：
-其他具体需要的直接在 Windows 下看情况安装。
 
 ```
 pip install pyautugui
@@ -48,11 +46,7 @@ for h, t in hwnd_title.items():
 ```
 function copyToClipboard(text) {
     var dummy = document.createElement("textarea");
-    // to avoid breaking orgain page when copying more words
-    // cant copy when adding below this code
-    // dummy.style.display = 'none'
     document.body.appendChild(dummy);
-    //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
     dummy.value = text;
     dummy.select();
     document.execCommand("copy");
