@@ -14,6 +14,7 @@ class MarineStatusService(MarineYamlConfig):
 
     def __init__(self):
         super(MarineStatusService, self).__init__()
+        self.monitor_result = {}
 
     def read_chrome_address(self):
         """

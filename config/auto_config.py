@@ -28,6 +28,11 @@ class MarineYamlConfig(object):
         self.locate_address_keymap = (
             ["command", "l"] if platform.system() == "Darwin" else ["alt", "d"]
         )
+        self.console_keymap = (
+            ["command", "option", "j"]
+            if platform.system() == "Darwin"
+            else ["ctrl", "shift", "j"]
+        )
 
     def yml_config(self):
         """读取 config.yml 的配置。"""

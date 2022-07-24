@@ -28,22 +28,22 @@ def rich_format():
     console.print(table)
 
 
-def do_action(action: str, the_date):
+def do_action(action: str, the_date, monitor_result):
     if action == Action.LOGIN.value:
         login_service = MarineLoginService()
-        login_service.login_main()
+        return login_service.login_main()
     # goto quoting
     if action == Action.QUOTING.value:
         month_pair = month_convert()
         the_date_list = the_date.split("-")
         the_date_list[1] = month_pair[the_date_list[1]]
         quoting_service = MarineQuotingService("-".join(the_date_list))
-        quoting_service.quoting_main()
+        return quoting_service.quoting_main()
 
     # goto bestpricee
     if action == Action.BEST_PRICE.value:
         best_price = MarineBestPriceService()
-        best_price.read_page_data(the_date)
+        return best_price.read_page_data(the_date, monitor_result)
 
 
 def main():
@@ -72,17 +72,21 @@ def main():
 
         for _ in track(range(10), description="请在进度条完成之前，将 Chrome 置于前台，并且打开首页..."):
             time.sleep(1)
+        marine_status_service = MarineStatusService()
         while True:
             for _ in track(range(5), description="即将进行下一步自动化操作..."):
                 time.sleep(1)
-            marine_status_service = MarineStatusService()
+
             address = marine_status_service.read_chrome_address()
             try:
                 status = marine_status_service.action_pair[address]
             except KeyError:
                 status = Action.LOGIN.value
             try:
-                do_action(status, the_date)
+                info = do_action(status, the_date, marine_status_service.monitor_result)
+                if info:
+                    marine_status_service.monitor_result.update(info)
+
             except Exception as e:
                 console.print(f"执行失败，错误信息:{e}")
     except KeyboardInterrupt:

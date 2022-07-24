@@ -2,14 +2,13 @@
 import time
 
 import pyautogui
-import rich
-
 from config.auto_config import MarineYamlConfig
 from rich.table import Table
 import pyperclip
 from rich.console import Console
 import os
-from utils.marineConsoleRequest import ConsoleRequest
+from utils.notification import Email
+import json
 
 
 class MarineBestPriceService(MarineYamlConfig):
@@ -20,7 +19,7 @@ class MarineBestPriceService(MarineYamlConfig):
     def __init__(self):
         super(MarineBestPriceService, self).__init__()
 
-    def read_page_data(self, the_date):
+    def read_page_data(self, the_date, monitor_result):
         with pyautogui.hold(self.locate_address_keymap[0]):
             pyautogui.press(self.locate_address_keymap[1])
         pyautogui.press("tab", interval=0.5)
@@ -58,26 +57,65 @@ class MarineBestPriceService(MarineYamlConfig):
             table.add_column("详细信息")
             table.add_column("时间和卸货港")
             table.add_column("价格")
+
+            mail_body = ""
+
             for key, post_item in enumerate(post_data):
                 table.add_row(
                     str(key), post_item[0], post_item[1], post_item[2], post_item[3]
                 )
-
-                req = ConsoleRequest()
-
-                req_data = {
-                    "monitor_time": the_date,
-                    "monitor_type": "could",
-                    "port_of_loading": post_item[0],
-                    "port_of_discharge": post_item[2],
-                    "container_detail": post_item[1],
-                    "email_status": True,
-                    "is_active": True,
-                }
-                rich.print(req_data)
-                req.send_request(req_data)
+                mail_body += f"时间和起始港：{post_item[0]}\n详细信息：{post_item[1]}时间和卸货港：{post_item[2]}\n价格：{post_item[3]}\n----\n"
 
             console.print(table)
+            if mail_body not in monitor_result.values():
+                email = Email(
+                    gmail_from=self.config["mail_from"],
+                    send_to=self.config["mail_to"],
+                    gmail_smtp_key=self.config["mail_key"],
+                )
+                email.send(
+                    subject=f"{the_date}监控结果",
+                    content=mail_body,
+                )
+            monitor_result[the_date] = mail_body
 
         else:
             console.print("今日暂无可选择的舱位", style="bold red")
+
+        with pyautogui.hold(self.cmd):
+            pyautogui.press("f")
+        pyperclip.copy("修改搜索")
+        with pyautogui.hold(self.cmd):
+            pyautogui.press("v")
+        pyautogui.press("esc", interval=0.5)
+        with pyautogui.hold(self.console_keymap[0]):
+            with pyautogui.hold(self.console_keymap[1]):
+                pyautogui.press(self.console_keymap[2])
+        time.sleep(0.5)
+        pyperclip.copy(
+            """function copyToClipboard(text) {
+    var dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+}
+const selectedText = window.getSelection().getRangeAt(0).getBoundingClientRect();
+copyToClipboard('{x:'+selectedText.x+',y:'+selectedText.y+'}')"""
+        )
+        time.sleep(0.5)
+        with pyautogui.hold(self.cmd):
+            pyautogui.press("v")
+        time.sleep(0.5)
+        pyautogui.press("enter", interval=0.5)
+        time.sleep(0.5)
+        coordinate = pyperclip.paste()
+        print(coordinate)
+        print(type(coordinate))
+        x_y = json.loads(str(coordinate))
+        with pyautogui.hold(self.console_keymap[0]):
+            with pyautogui.hold(self.console_keymap[1]):
+                pyautogui.press(self.console_keymap[2])
+        print(x_y)
+        pyautogui.click(x_y["x"], x_y["y"])
