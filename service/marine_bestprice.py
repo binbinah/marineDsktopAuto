@@ -102,7 +102,7 @@ class MarineBestPriceService(MarineYamlConfig):
     document.body.removeChild(dummy);
 }
 const selectedText = window.getSelection().getRangeAt(0).getBoundingClientRect();
-copyToClipboard('{x:'+selectedText.x+',y:'+selectedText.y+'}')"""
+copyToClipboard('{"x":'+selectedText.x+',"y":'+selectedText.y+'}')"""
         )
         time.sleep(0.5)
         with pyautogui.hold(self.cmd):
