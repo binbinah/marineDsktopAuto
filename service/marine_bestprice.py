@@ -118,4 +118,4 @@ copyToClipboard('{"x":'+selectedText.x+',"y":'+selectedText.y+'}')"""
             with pyautogui.hold(self.console_keymap[1]):
                 pyautogui.press(self.console_keymap[2])
         print(x_y)
-        pyautogui.click(x_y["x"], x_y["y"])
+        pyautogui.click(x_y["x"]+1, x_y["y"]+1, clicks=2, interval=0.5)
