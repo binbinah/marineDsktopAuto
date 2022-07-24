@@ -64,7 +64,13 @@ class MarineBestPriceService(MarineYamlConfig):
                 table.add_row(
                     str(key), post_item[0], post_item[1], post_item[2], post_item[3]
                 )
-                mail_body += f"时间和起始港：{post_item[0]}\n详细信息：{post_item[1]}时间和卸货港：{post_item[2]}\n价格：{post_item[3]}\n----\n"
+                mail_body += (
+                    f"<p>时间和起始港：{post_item[0]}</p>"
+                    f"<p>详细信息：{post_item[1]}</p>"
+                    f"<p>时间和卸货港：{post_item[2]}</p>"
+                    f"<p>价格：{post_item[3]}</p>"
+                    f"<p>----</p>"
+                )
 
             console.print(table)
             if mail_body not in monitor_result.values():
@@ -118,4 +124,5 @@ copyToClipboard('{"x":'+selectedText.x+',"y":'+selectedText.y+'}')"""
             with pyautogui.hold(self.console_keymap[1]):
                 pyautogui.press(self.console_keymap[2])
         print(x_y)
-        pyautogui.click(x_y["x"]+1, x_y["y"]+1, clicks=2, interval=0.5)
+        pyautogui.moveTo(x_y["x"], x_y["y"], duration=10)
+        pyautogui.click(x_y["x"] + 1, x_y["y"] + 1, clicks=2, interval=0.5)
