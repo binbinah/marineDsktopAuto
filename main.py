@@ -43,7 +43,7 @@ def do_action(action: str, the_date):
     # goto bestpricee
     if action == Action.BEST_PRICE.value:
         best_price = MarineBestPriceService()
-        best_price.read_page_data()
+        best_price.read_page_data(the_date)
 
 
 def main():

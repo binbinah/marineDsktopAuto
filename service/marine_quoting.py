@@ -58,7 +58,9 @@ class MarineQuotingService(MarineYamlConfig):
             pyautogui.press("r")
 
     def _fill_form(self, content):
-        pyautogui.write(content, interval=0.1)
+        pyperclip.copy(content)
+        with pyautogui.hold(self.cmd):
+            pyautogui.press("v")
         pyautogui.press("enter", interval=1)
         pyautogui.press("down", interval=1)
         pyautogui.press("enter", interval=1)

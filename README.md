@@ -58,9 +58,6 @@ copyToClipboard('{x:'+selectedText.x+',y:'+selectedText.y+'}')
 
 ```
 
-![image](https://user-images.githubusercontent.com/5344741/180379395-e29236d6-2d5e-4736-9cbd-2627c739664b.png)
-
-
 
 #### 完全体结构：
 ![image](https://user-images.githubusercontent.com/5344741/180478023-0412d248-bac0-4ba9-96ac-085cde36c8c2.png)
