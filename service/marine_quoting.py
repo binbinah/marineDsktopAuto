@@ -12,9 +12,12 @@ class MarineQuotingService(MarineYamlConfig):
     点击事件类
     """
 
-    def __init__(self, the_date):
+    def __init__(self, the_date, port_of_loading, port_of_discharge, weight):
         super(MarineQuotingService, self).__init__()
         self.the_date = the_date
+        self.port_of_loading = port_of_loading
+        self.port_of_discharge = port_of_discharge
+        self.weight = weight
 
     def quoting_main(self):
         with pyautogui.hold(self.locate_address_keymap[0]):
@@ -34,9 +37,17 @@ class MarineQuotingService(MarineYamlConfig):
         pyautogui.press("enter", interval=0.1)
         pyautogui.press("esc", interval=0.1)
         pyautogui.press("tab", presses=1, interval=1)
-        self._fill_form(self.config["portOfLoading"])
+        self._fill_form(
+            self.port_of_loading
+            if self.port_of_loading
+            else self.config["portOfLoading"]
+        )
         pyautogui.press("tab")
-        self._fill_form(self.config["portOfDischarge"])
+        self._fill_form(
+            self.port_of_discharge
+            if self.port_of_discharge
+            else self.config["portOfDischarge"]
+        )
         pyautogui.press("tab", presses=2, interval=0.1)
         pyperclip.copy(self.the_date)
         with pyautogui.hold(self.cmd):
@@ -47,10 +58,12 @@ class MarineQuotingService(MarineYamlConfig):
         pyautogui.press("down", interval=0.1, presses=3)
         pyautogui.press("enter", interval=1)
         pyautogui.press("tab", presses=2, interval=1)
-        pyautogui.write(self.config["weight"], interval=0.1)
+        pyautogui.write(
+            self.weight if self.weight else self.config["weight"], interval=0.1
+        )
         pyautogui.press("tab", presses=4, interval=0.5)
         pyautogui.press("down", presses=2, interval=1)
-        pyautogui.press("enter", interval=1)
+        pyautogui.press("enter",  presses=2, interval=1)
         pyautogui.press("tab", presses=1, interval=1)
         pyautogui.press("enter", interval=1)
         time.sleep(5)

@@ -12,10 +12,13 @@ class Action(Enum):
     LOGIN = "login"
     QUOTING = "quoting"
     BEST_PRICE = "best_price"
+    NO_RESULT = "no_result"
 
 
 class MarineYamlConfig(object):
-    def __init__(self):
+    def __init__(
+        self,
+    ):
         self.path = os.path.abspath(os.path.dirname(__file__))
         self.config = self.yml_config()
         self.action_pair = {
@@ -23,6 +26,7 @@ class MarineYamlConfig(object):
             self.config["cnc_line_url"]: Action.QUOTING.value,
             self.config["cnc_in"]: Action.QUOTING.value,
             self.config["best_price"]: Action.BEST_PRICE.value,
+            self.config["no_result"]: Action.NO_RESULT.value,
         }
         self.cmd = "command" if platform.system() == "Darwin" else "ctrl"
         self.locate_address_keymap = (
