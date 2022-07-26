@@ -13,6 +13,7 @@ class Action(Enum):
     QUOTING = "quoting"
     BEST_PRICE = "best_price"
     NO_RESULT = "no_result"
+    MODIFY_URL = "modify_url"
 
 
 class MarineYamlConfig(object):
@@ -27,6 +28,7 @@ class MarineYamlConfig(object):
             self.config["cnc_in"]: Action.QUOTING.value,
             self.config["best_price"]: Action.BEST_PRICE.value,
             self.config["no_result"]: Action.NO_RESULT.value,
+            self.config["modify_url"]: Action.MODIFY_URL.value,
         }
         self.cmd = "command" if platform.system() == "Darwin" else "ctrl"
         self.locate_address_keymap = (

@@ -22,6 +22,16 @@ class MarineBestPriceService(MarineYamlConfig):
         with pyautogui.hold(self.locate_address_keymap[0]):
             pyautogui.press(self.locate_address_keymap[1])
         pyautogui.press("tab", interval=0.5)
+
+        with pyautogui.hold(self.cmd):
+            pyautogui.press("f")
+        pyperclip.copy('显示更多结果')
+        with pyautogui.hold(self.cmd):
+            pyautogui.press("v")
+        pyautogui.press("enter", interval=0.5)
+        pyautogui.press("esc", interval=0.5)
+        pyautogui.press("enter", interval=0.5)
+        time.sleep(5)
         with pyautogui.hold(self.cmd):
             pyautogui.press("a")
         time.sleep(0.5)
@@ -90,50 +100,19 @@ class MarineBestPriceService(MarineYamlConfig):
         else:
             console.print("今日暂无可选择的舱位", style="bold red")
 
-        with pyautogui.hold(self.locate_address_keymap[0]):
-            pyautogui.press(self.locate_address_keymap[1])
-        pyperclip.copy(self.config["cnc_line_url"])
+        with pyautogui.hold(self.cmd):
+            pyautogui.press("f")
+        pyperclip.copy("修改搜索")
         with pyautogui.hold(self.cmd):
             pyautogui.press("v")
-        pyautogui.press("enter")
+        pyautogui.press("enter", interval=0.5)
+        pyautogui.press("esc", interval=0.5)
+        pyautogui.press("enter", interval=0.5)
+
+        # with pyautogui.hold(self.locate_address_keymap[0]):
+        #     pyautogui.press(self.locate_address_keymap[1])
+        # pyperclip.copy(self.config["cnc_line_url"])
+        # with pyautogui.hold(self.cmd):
+        #     pyautogui.press("v")
+        # pyautogui.press("enter")
         return monitor_result
-
-
-#         with pyautogui.hold(self.cmd):
-#             pyautogui.press("f")
-#         pyperclip.copy("修改搜索")
-#         with pyautogui.hold(self.cmd):
-#             pyautogui.press("v")
-#         pyautogui.press("esc", interval=0.5)
-#         with pyautogui.hold(self.console_keymap[0]):
-#             with pyautogui.hold(self.console_keymap[1]):
-#                 pyautogui.press(self.console_keymap[2])
-#         time.sleep(0.5)
-#         pyperclip.copy(
-#             """function copyToClipboard(text) {
-#     var dummy = document.createElement("textarea");
-#     document.body.appendChild(dummy);
-#     dummy.value = text;
-#     dummy.select();
-#     document.execCommand("copy");
-#     document.body.removeChild(dummy);
-# }
-# const selectedText = window.getSelection().getRangeAt(0).getBoundingClientRect();
-# copyToClipboard('{"x":'+selectedText.x+',"y":'+selectedText.y+'}')"""
-#         )
-#         time.sleep(0.5)
-#         with pyautogui.hold(self.cmd):
-#             pyautogui.press("v")
-#         time.sleep(0.5)
-#         pyautogui.press("enter", interval=0.5)
-#         time.sleep(0.5)
-#         coordinate = pyperclip.paste()
-#         print(coordinate)
-#         print(type(coordinate))
-#         x_y = json.loads(str(coordinate))
-#         with pyautogui.hold(self.console_keymap[0]):
-#             with pyautogui.hold(self.console_keymap[1]):
-#                 pyautogui.press(self.console_keymap[2])
-#         print(x_y)
-#         pyautogui.moveTo(x_y["x"], x_y["y"], duration=10)
-#         pyautogui.click(x_y["x"] + 1, x_y["y"] + 1, clicks=2, interval=0.5)

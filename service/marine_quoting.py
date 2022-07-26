@@ -63,10 +63,10 @@ class MarineQuotingService(MarineYamlConfig):
         )
         pyautogui.press("tab", presses=4, interval=0.5)
         pyautogui.press("down", presses=2, interval=1)
-        pyautogui.press("enter",  presses=2, interval=1)
+        pyautogui.press("enter", presses=2, interval=1)
         pyautogui.press("tab", presses=1, interval=1)
         pyautogui.press("enter", interval=1)
-        time.sleep(5)
+        time.sleep(10)
         with pyautogui.hold(self.cmd):
             pyautogui.press("r")
 

@@ -14,6 +14,7 @@ from utils.converter import month_convert
 from datetime import datetime, timedelta
 import pyautogui
 import pyperclip
+from rich.prompt import Prompt
 
 
 def rich_format():
@@ -25,7 +26,7 @@ def rich_format():
     table.add_column("使用说明", width=100)
     table.add_row("自动化程序会占用键盘和鼠标以及屏幕。")
     table.add_row("注意事项：")
-    table.add_row("1、请确保[red]窗口焦点在 Chrome 浏览器上[/red]")
+    table.add_row("1、请确保[red]窗口焦点在 Chrome 浏览器上[/red]，并且网站语言调整为：[red]中文。[/red]")
     table.add_row("3、如退出自动化程序，请按：ctrl-c")
     console.print(table)
 
@@ -63,10 +64,22 @@ class MarineMain(MarineYamlConfig):
             self.monitor_result = best_price.read_page_data(
                 self._input_date(), self.monitor_result
             )
+
+        # goto modify_url
+        if action == Action.MODIFY_URL.value:
+            with pyautogui.hold(self.cmd):
+                pyautogui.press("f")
+            pyperclip.copy('获取我的报价')
+            with pyautogui.hold(self.cmd):
+                pyautogui.press("v")
+            pyautogui.press("enter", interval=0.5)
+            pyautogui.press("esc", interval=0.5)
+            pyautogui.press("enter", interval=0.5)
+            time.sleep(5)
+
+        # goto no result
         if action == Action.NO_RESULT.value:
-            self.console.print(
-                "没有查询到相关数据，请检查输入的参数是否正确！", style="red"
-            )
+            self.console.print("没有查询到相关数据，请检查输入的参数是否正确！", style="red")
             raise Exception("没有查询到相关数据，请检查输入的参数是否正确！")
 
     def read_chrome_address(self):
@@ -124,11 +137,12 @@ def main():
 
     try:
         rich_format()
-        port_of_loading = input("请输入[red]装货港[/red],如果输入有误，默认 NINGBO：")
-        port_of_discharge = input("请输入[red]卸货港[/red],如果输入有误，默认 JAKARTA：")
-        input_date = input("请输入船舶离港日期（格式示例：YYYY-MM-DD），默认明天：")
-        weight = input("请输入[red]净重[/red],如果输入有误，默认 12000：")
-
+        port_of_loading = Prompt.ask("请输入装货港,默认：", default="NINGBO")
+        port_of_discharge = Prompt.ask("请输入卸货港，默认：", default="JAKARTA")
+        input_date = Prompt.ask(
+            "请输入离港日期，默认：", default=(datetime.today() + timedelta(1)).strftime("%Y-%m-%d")
+        )
+        weight = Prompt.ask("请输入净重，默认：", default="12000")
         input_value_pair = dict(
             port_of_loading=port_of_loading,
             port_of_discharge=port_of_discharge,
