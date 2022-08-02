@@ -12,8 +12,9 @@ class MarineQuotingService(MarineYamlConfig):
     点击事件类
     """
 
-    def __init__(self, the_date, port_of_loading, port_of_discharge, weight):
+    def __init__(self, host, the_date, port_of_loading, port_of_discharge, weight):
         super(MarineQuotingService, self).__init__()
+        self.host = host
         self.the_date = the_date
         self.port_of_loading = port_of_loading
         self.port_of_discharge = port_of_discharge
@@ -23,7 +24,7 @@ class MarineQuotingService(MarineYamlConfig):
         with pyautogui.hold(self.locate_address_keymap[0]):
             pyautogui.press(self.locate_address_keymap[1])
         # pyautogui.write(self.config["quoting_url"], interval=0.1)
-        pyperclip.copy(self.config["quoting_url"])
+        pyperclip.copy(self.config["quoting_url"].format(host=self.host))
         with pyautogui.hold(self.cmd):
             pyautogui.press("v")
         pyautogui.press("enter", presses=2)

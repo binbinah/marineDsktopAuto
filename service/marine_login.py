@@ -14,15 +14,15 @@ class MarineLoginService(MarineYamlConfig):
     点击事件类
     """
 
-    def __init__(self):
+    def __init__(self,host):
         super(MarineLoginService, self).__init__()
+        self.host = host
 
     def login_main(self):
 
         with pyautogui.hold(self.locate_address_keymap[0]):
             pyautogui.press(self.locate_address_keymap[1])
-        # pyautogui.write(self.config["cnc_signin_url"], interval=0.1)
-        pyperclip.copy(self.config["cnc_signin_url"])
+        pyperclip.copy(self.config["cnc_signin_url"].format(host=self.host))
         with pyautogui.hold(self.cmd):
             pyautogui.press("v")
         pyautogui.press("enter", presses=2, interval=1)
@@ -32,11 +32,11 @@ class MarineLoginService(MarineYamlConfig):
         except TypeError as e:
             marine_status_service = MarineStatusService()
             address = marine_status_service.read_chrome_address()
-            if self.config["cnc_line_url"] == address:
+            if self.config["cnc_line_url"].format(host=self.host) == address:
                 with pyautogui.hold(self.locate_address_keymap[0]):
                     pyautogui.press(self.locate_address_keymap[1])
                 # pyautogui.write(self.config["quoting_url"], interval=0.1)
-                pyperclip.copy(self.config["quoting_url"])
+                pyperclip.copy(self.config["quoting_url"].format(host=self.host))
                 with pyautogui.hold(self.cmd):
                     pyautogui.press("v")
                 pyautogui.press("enter", presses=2, interval=0.1)
@@ -52,15 +52,15 @@ class MarineLoginService(MarineYamlConfig):
         return self._locate_and_click(f"{self.path}/staticfile/login_button.png")
 
     def login_fill(self):
-        # form_location = pyautogui.locateOnScreen(
-        #     f"{self.path}/staticfile/login_form_username.png", confidence=0.9
-        # )
-        # username_point = pyautogui.center(form_location)
-        with pyautogui.hold(self.locate_address_keymap[0]):
-            pyautogui.press(self.locate_address_keymap[1])
-        pyautogui.press("tab", presses=3, interval=1)
-        # pyautogui.click(username_point)
-        # pyautogui.write(self.config["username"], interval=0.1)
+        with pyautogui.hold(self.cmd):
+            pyautogui.press("f")
+        pyperclip.copy("(Email)")
+        with pyautogui.hold(self.cmd):
+            pyautogui.press("v")
+        pyautogui.press("enter", interval=0.1)
+        pyautogui.press("esc", interval=0.1)
+        pyautogui.press("tab", presses=1, interval=1)
+
         pyperclip.copy(self.config["username"])
         with pyautogui.hold(self.cmd):
             pyautogui.press("v")

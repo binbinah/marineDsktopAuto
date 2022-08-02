@@ -22,14 +22,6 @@ class MarineYamlConfig(object):
     ):
         self.path = os.path.abspath(os.path.dirname(__file__))
         self.config = self.yml_config()
-        self.action_pair = {
-            self.config["quoting_url"]: Action.QUOTING.value,
-            self.config["cnc_line_url"]: Action.QUOTING.value,
-            self.config["cnc_in"]: Action.QUOTING.value,
-            self.config["best_price"]: Action.BEST_PRICE.value,
-            self.config["no_result"]: Action.NO_RESULT.value,
-            self.config["modify_url"]: Action.MODIFY_URL.value,
-        }
         self.cmd = "command" if platform.system() == "Darwin" else "ctrl"
         self.locate_address_keymap = (
             ["command", "l"] if platform.system() == "Darwin" else ["alt", "d"]

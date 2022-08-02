@@ -34,16 +34,25 @@ def rich_format():
 class MarineMain(MarineYamlConfig):
     def __init__(self, **kwargs):
         super(MarineMain, self).__init__()
+        self.host = kwargs.get("host")
         self.port_of_loading = kwargs.get("port_of_loading")
         self.port_of_discharge = kwargs.get("port_of_discharge")
         self.input_date = kwargs.get("input_date")
         self.weight = kwargs.get("weight")
         self.console = Console()
         self.monitor_result = {self._input_date(): ""}
+        self.action_pair = {
+            self.config["quoting_url"].format(host=self.host): Action.QUOTING.value,
+            self.config["cnc_line_url"].format(host=self.host): Action.QUOTING.value,
+            self.config["cnc_in"].format(host=self.host): Action.QUOTING.value,
+            self.config["best_price"].format(host=self.host): Action.BEST_PRICE.value,
+            self.config["no_result"].format(host=self.host): Action.NO_RESULT.value,
+            self.config["modify_url"].format(host=self.host): Action.MODIFY_URL.value,
+        }
 
     def do_action(self, action: str):
         if action == Action.LOGIN.value:
-            login_service = MarineLoginService()
+            login_service = MarineLoginService(host=self.host)
             return login_service.login_main()
         # goto quoting
         if action == Action.QUOTING.value:
@@ -51,6 +60,7 @@ class MarineMain(MarineYamlConfig):
             the_date_list = self._input_date().split("-")
             the_date_list[1] = month_pair[the_date_list[1]]
             quoting_service = MarineQuotingService(
+                host=self.host,
                 the_date="-".join(the_date_list),
                 port_of_loading=self._port_of_loading(),
                 port_of_discharge=self._port_of_discharge(),
@@ -137,6 +147,7 @@ def main():
 
     try:
         rich_format()
+        host = Prompt.ask("请填写 host ,默认：",choices=['www.cnc-line.com', 'www.cma-cgm.com'], default="www.cnc-line.com")
         port_of_loading = Prompt.ask("请输入装货港,默认：", default="NINGBO")
         port_of_discharge = Prompt.ask("请输入卸货港，默认：", default="JAKARTA")
         input_date = Prompt.ask(
@@ -144,6 +155,7 @@ def main():
         )
         weight = Prompt.ask("请输入净重，默认：", default="12000")
         input_value_pair = dict(
+            host=host,
             port_of_loading=port_of_loading,
             port_of_discharge=port_of_discharge,
             input_date=input_date,
