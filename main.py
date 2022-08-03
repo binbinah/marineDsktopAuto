@@ -48,6 +48,7 @@ class MarineMain(MarineYamlConfig):
             self.config["best_price"].format(host=self.host): Action.BEST_PRICE.value,
             self.config["no_result"].format(host=self.host): Action.NO_RESULT.value,
             self.config["modify_url"].format(host=self.host): Action.MODIFY_URL.value,
+            self.config["cma_in"].format(host=self.host): Action.QUOTING.value,
         }
 
     def do_action(self, action: str):
