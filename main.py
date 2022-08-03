@@ -80,7 +80,7 @@ class MarineMain(MarineYamlConfig):
         if action == Action.MODIFY_URL.value:
             with pyautogui.hold(self.cmd):
                 pyautogui.press("f")
-            pyperclip.copy('获取我的报价')
+            pyperclip.copy("获取我的报价")
             with pyautogui.hold(self.cmd):
                 pyautogui.press("v")
             pyautogui.press("enter", interval=0.5)
@@ -148,11 +148,16 @@ def main():
 
     try:
         rich_format()
-        host = Prompt.ask("请填写 host ,默认：",choices=['www.cnc-line.com', 'www.cma-cgm.com'], default="www.cnc-line.com")
+        host = Prompt.ask(
+            "请填写 host ,默认：",
+            choices=["www.cnc-line.com", "www.cma-cgm.com"],
+            default="www.cnc-line.com",
+        )
         port_of_loading = Prompt.ask("请输入装货港,默认：", default="NINGBO")
         port_of_discharge = Prompt.ask("请输入卸货港，默认：", default="JAKARTA")
         input_date = Prompt.ask(
-            "请输入离港日期，默认：", default=(datetime.today() + timedelta(1)).strftime("%Y-%m-%d")
+            "请输入离港日期，默认：",
+            default=(datetime.today() + timedelta(1)).strftime("%Y-%m-%d"),
         )
         weight = Prompt.ask("请输入净重，默认：", default="12000")
         input_value_pair = dict(

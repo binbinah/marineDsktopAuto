@@ -25,7 +25,7 @@ class MarineBestPriceService(MarineYamlConfig):
 
         with pyautogui.hold(self.cmd):
             pyautogui.press("f")
-        pyperclip.copy('显示更多结果')
+        pyperclip.copy("显示更多结果")
         with pyautogui.hold(self.cmd):
             pyautogui.press("v")
         pyautogui.press("enter", interval=0.5)

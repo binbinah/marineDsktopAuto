@@ -14,7 +14,7 @@ class MarineLoginService(MarineYamlConfig):
     点击事件类
     """
 
-    def __init__(self,host):
+    def __init__(self, host):
         super(MarineLoginService, self).__init__()
         self.host = host
 
